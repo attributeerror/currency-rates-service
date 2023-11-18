@@ -20,5 +20,4 @@ jobs:
       packages: write # to be able to push Docker images
       contents: write # to be able to tag commits
     with:
-      # TODO: change package name
-      package-name: CHANGEME
+      package-name: currency-rates-service

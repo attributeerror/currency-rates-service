@@ -1,2 +1,2 @@
-# golang-template-repository
-Template repository used for any and all of my Golang microservices.
+# currency-rates-service
+A microservice that allows for easy currency conversion
