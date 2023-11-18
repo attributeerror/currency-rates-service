@@ -26,7 +26,12 @@ func main() {
 
 	convert_handlers.InitialiseRoutes(engine, db)
 
-	engine.Run(":8080")
+	port, _ := loadenvvar("PORT", false)
+	if port == nil {
+		engine.Run(":80")
+	} else {
+		engine.Run(fmt.Sprintf(":%s", *port))
+	}
 }
 
 func loadDotEnv() error {
