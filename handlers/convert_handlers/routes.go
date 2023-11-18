@@ -7,4 +7,5 @@ import (
 
 func InitialiseRoutes(e *gin.Engine, db database.Database) {
 	e.GET("convert", GetConvertCurrencyFromBase(db))
+	e.GET("liveness", LivenessProbe())
 }
