@@ -11,9 +11,9 @@ import (
 
 var GetConvertCurrencyFromBase = func(r database.Database) func(c *gin.Context) {
 	return func(c *gin.Context) {
-		baseCode := c.Query("base")
-		toCode := c.Query("to")
-		amount := c.Query("amount")
+		baseCode := c.DefaultQuery("base", "EUR")
+		toCode := c.DefaultQuery("to", "")
+		amount := c.DefaultQuery("amount", "")
 
 		if baseCode == "" || toCode == "" || amount == "" {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "missing one or more required parameters: base, to, amount"})

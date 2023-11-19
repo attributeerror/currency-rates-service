@@ -6,11 +6,6 @@ import (
 )
 
 func InitialiseRoutes(e *gin.Engine, db database.Database) {
-	// app endpoints
-	rootGroup := e.Group("/currency-rates-service")
-	v1Group := rootGroup.Group("/v1")
-	v1Group.GET("convert", GetConvertCurrencyFromBase(db))
-
-	// liveness/readiness endpoint
+	e.GET("convert", GetConvertCurrencyFromBase(db))
 	e.GET("liveness", LivenessProbe())
 }
