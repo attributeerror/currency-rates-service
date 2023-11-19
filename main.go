@@ -9,6 +9,7 @@ import (
 	"github.com/attributeerror/currency-rates-service/handlers/convert_handlers"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	"golang.org/x/sync/singleflight"
 )
 
 func main() {
@@ -23,8 +24,10 @@ func main() {
 
 	engine := gin.New()
 	engine.Use(gin.Recovery())
+	engine.Use(gin.Logger())
 
-	convert_handlers.InitialiseRoutes(engine, db)
+	sfGroup := singleflight.Group{}
+	convert_handlers.InitialiseRoutes(engine, db, &sfGroup)
 
 	port, _ := loadenvvar("PORT", false)
 	if port == nil {
