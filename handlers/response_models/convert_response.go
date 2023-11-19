@@ -2,9 +2,9 @@ package response_models
 
 type (
 	ConvertCurrencyResponse struct {
-		ToCode          string
-		BaseCode        string
-		BaseAmount      float64
-		ConvertedAmount float64
+		ToCode          string  `json:"to,omitempty"`
+		BaseCode        string  `json:"from,omitempty"`
+		BaseAmount      float64 `json:"baseAmount,omitempty"`
+		ConvertedAmount float64 `json:"convertedAmount,omitempty"`
 	}
 )

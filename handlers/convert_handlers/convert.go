@@ -54,8 +54,7 @@ var GetConvertCurrencyFromBase = func(r database.Database, sfGroup *singleflight
 
 				fmt.Printf("%f %s = %f %s\n", baseAmount, baseCode, convertedAmount, toCode)
 
-				c.JSON(http.StatusOK, gin.H{"from": baseCode, "to": toCode, "baseAmount": baseAmount, "convertedAmount": convertedAmount})
-				return response_models.ConvertCurrencyResponse{
+				return &response_models.ConvertCurrencyResponse{
 					BaseCode:        baseCode,
 					ToCode:          toCode,
 					BaseAmount:      baseAmount,
@@ -72,7 +71,7 @@ var GetConvertCurrencyFromBase = func(r database.Database, sfGroup *singleflight
 
 			convertedAmount := baseAmount * *euroRate // 20 EUR = 17.5266 GBP
 
-			return response_models.ConvertCurrencyResponse{
+			return &response_models.ConvertCurrencyResponse{
 				BaseCode:        baseCode,
 				ToCode:          toCode,
 				BaseAmount:      baseAmount,
@@ -94,14 +93,8 @@ var GetConvertCurrencyFromBase = func(r database.Database, sfGroup *singleflight
 			return
 		}
 
-		if responseModel, ok := response.(response_models.ConvertCurrencyResponse); ok {
-			c.JSON(http.StatusOK, gin.H{
-				"from":            responseModel.BaseCode,
-				"to":              responseModel.ToCode,
-				"baseAmount":      responseModel.BaseAmount,
-				"convertedAmount": responseModel.ConvertedAmount,
-			})
-
+		if responseModel, ok := response.(*response_models.ConvertCurrencyResponse); ok {
+			c.JSON(http.StatusOK, responseModel)
 			return
 		}
 
