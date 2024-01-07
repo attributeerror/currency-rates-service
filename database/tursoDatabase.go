@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/libsql/go-libsql"
+	libsql "github.com/libsql/go-libsql"
 )
 
 func InitTursoDatabase(options ...TursoDbOption) (*tursoDatabase, error) {

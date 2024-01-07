@@ -35,22 +35,20 @@ var GetConvertCurrencyFromBase = func(r database.Database, sfGroup *singleflight
 			fmt.Printf("received request to convert %f %s to %s\n", baseAmount, baseCode, toCode)
 
 			if baseCode != "EUR" {
-				baseCodeToEuroRate, err := r.GetEuroRateForCurrency(baseCode) // 1 EUR = 1.09164 USD
+				baseCodeToEuroRate, err := r.GetEuroRateForCurrency(baseCode)
 				if err != nil {
 					return nil, fmt.Errorf("error whilst getting euro rate for currency %s: %w", baseCode, err)
 				}
-				toCodeToEuroRate, err := r.GetEuroRateForCurrency(toCode) // 1 EUR = 0.87633 GBP
+				toCodeToEuroRate, err := r.GetEuroRateForCurrency(toCode)
 				if err != nil {
 					return nil, fmt.Errorf("error whilst getting euro rate for currency %s: %w", toCode, err)
 				}
 
 				fmt.Printf("1 EUR = %f %s\n1 EUR = %f %s\n", *baseCodeToEuroRate, baseCode, *toCodeToEuroRate, toCode)
 
-				baseToEurRate := 1 / *baseCodeToEuroRate // 1 USD = 0.91605 EUR
-
-				baseAmountInEuros := baseAmount * baseToEurRate // 20 USD * 0.91605 EUR = 18.321 EUR
-
-				convertedAmount := baseAmountInEuros * *toCodeToEuroRate // 18.321 EUR * 0.87633 GBP = 16.05524 GBP
+				baseToEurRate := 1 / *baseCodeToEuroRate
+				baseAmountInEuros := baseAmount * baseToEurRate
+				convertedAmount := baseAmountInEuros * *toCodeToEuroRate
 
 				fmt.Printf("%f %s = %f %s\n", baseAmount, baseCode, convertedAmount, toCode)
 
@@ -62,14 +60,14 @@ var GetConvertCurrencyFromBase = func(r database.Database, sfGroup *singleflight
 				}, nil
 			}
 
-			euroRate, err := r.GetEuroRateForCurrency(toCode) // 1 EUR = 0.87633 GBP
+			euroRate, err := r.GetEuroRateForCurrency(toCode)
 			if err != nil {
 				return nil, fmt.Errorf("error whilst getting euro rate for currency %s: %s", toCode, err)
 			}
 
 			fmt.Printf("1 EUR = %f %s\n", *euroRate, toCode)
 
-			convertedAmount := baseAmount * *euroRate // 20 EUR = 17.5266 GBP
+			convertedAmount := baseAmount * *euroRate
 
 			return &response_models.ConvertCurrencyResponse{
 				BaseCode:        baseCode,

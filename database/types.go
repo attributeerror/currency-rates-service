@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"time"
 
-	"github.com/libsql/go-libsql"
+	libsql "github.com/libsql/go-libsql"
 )
 
 type (
