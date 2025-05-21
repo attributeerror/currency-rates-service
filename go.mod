@@ -3,7 +3,7 @@ module github.com/attributeerror/currency-rates-service
 go 1.21.5
 
 require (
-	github.com/gin-gonic/gin v1.10.0
+	github.com/gin-gonic/gin v1.10.1
 	github.com/joho/godotenv v1.5.1
 	github.com/libsql/go-libsql v0.0.0-20231101083310-de118db91aed
 	golang.org/x/sync v0.11.0
